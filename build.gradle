@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'dev.frizio.lab'
-version = '0.0.1-SNAPSHOT'
+version = '0.1.0'
 
 java {
     toolchain {
@@ -17,20 +17,27 @@ repositories {
     mavenCentral()
 }
 
+ext { 
+    arconiaVersion = '0.31.0'
+}
+
 dependencies {
+    // Arconia BOM: gestione centralizzata delle versioni 
+    implementation platform("io.arconia:arconia-bom:${arconiaVersion}")
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    
+    implementation 'io.arconia:arconia-spring-boot-starter'
+    
     testImplementation 'org.springframework.boot:spring-boot-starter-actuator-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-tasks.named('bootRun') {
-    systemProperty 'spring.profiles.active', 'dev'
-}
 
 tasks.named('test') {
     useJUnitPlatform()
-    systemProperty 'spring.profiles.active', 'test'
 }
  
